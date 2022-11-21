@@ -1,0 +1,7 @@
+image:
+  repository: "registry-01.gandiva.ru:443/s3manager"
+  tag: "776d69e2"
+  pullPolicy: IfNotPresent
+s3manager:
+  name: s3manager
+  port: "8888"

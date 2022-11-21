@@ -1,0 +1,84 @@
+stages:
+  - build
+  - deploy
+
+before_script:
+  - docker info
+  - docker-compose --version
+
+buildJob:
+  stage: build
+  tags:
+    - shell
+  script:
+    - echo "Build Images"
+    - docker build -t registry-01.gandiva.ru:443/bills-job:$CI_COMMIT_SHORT_SHA .
+    - docker push registry-01.gandiva.ru:443/bills-job:$CI_COMMIT_SHORT_SHA
+    #docker-compose build
+  except:
+    changes:
+      - "*.md"
+      - ".gitignore"
+      - "source/**/*"
+
+build-s3-Job:
+  stage: build
+  tags:
+    - shell
+  script:
+    - echo "Build S3manager Images"
+    - cd ./s3_manager
+    - docker build -t registry-01.gandiva.ru:443/s3manager:$CI_COMMIT_SHORT_SHA .
+    - docker push registry-01.gandiva.ru:443/s3manager:$CI_COMMIT_SHORT_SHA
+    #docker-compose build
+  except:
+    changes:
+      - "*.md"
+      - ".gitignore"
+      - "source/**/*"
+
+  #only:
+  #  changes:      
+  #    - "s3_manager/**/*"
+
+
+deployJob:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - echo "Deploy CronJob"
+    - for tpl_file in $(find . -regex '.*\.yaml.tpl'); do envsubst < $tpl_file > ${tpl_file%????}; done
+    - find -type f -name "*.yaml.tpl" -delete 
+    - cd ./bills-job-chart
+    - cat ./values.yaml
+    - helm upgrade --install -f values.yaml --namespace cronjobs  --create-namespace bills-cronjob-02 ./
+
+    #docker-compose up --force-recreate --detach 
+    #test
+  except:
+    changes:
+      - "*.md"
+      - ".gitignore"
+      - "source/**/*"
+
+deploy-s3-Job:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - echo "Deploy s3-manager"
+    - for tpl_file in $(find . -regex '.*\.yaml.tpl'); do envsubst < $tpl_file > ${tpl_file%????}; done
+    - find -type f -name "*.yaml.tpl" -delete 
+    - cd ./s3-manager-chart
+    - cat ./values.yaml
+    - helm upgrade --install -f values.yaml --namespace cronjobs  --create-namespace bills-s3manager ./
+
+    #docker-compose up --force-recreate --detach 
+    #test
+  except:
+    changes:
+      - "*.md"
+      - ".gitignore"
+      - "source/**/*"
+

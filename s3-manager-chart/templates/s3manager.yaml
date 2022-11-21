@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-manager-deployment
+  labels:
+    app: {{ .Values.s3manager.name }}
+    app.kubernetes.io/name: {{ .Values.s3manager.name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.s3manager.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.s3manager.name }}
+    spec:
+      containers:
+      - name: {{ .Values.s3manager.name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.s3manager.port }}

@@ -1,0 +1,5 @@
+python-dotenv
+boto3
+xhtml2pdf
+requests
+pandas

@@ -1,0 +1,12 @@
+repositories:
+  - name: stable
+    url: https://charts.helm.sh/stable
+
+releases:
+- name: fluentd
+  namespace: gitlab-managed-apps
+  chart: stable/fluentd
+  version: 2.4.0
+  installed: true
+  values:
+    - values.yaml
