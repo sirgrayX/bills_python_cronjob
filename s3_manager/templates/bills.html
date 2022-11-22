@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<div class="instruction">
+  <p>Чтобы скачать нужный чек, кликните на него правой левой мыши.</p>
+</div>
+{% for bill in bills: %}
+<div class="fileUnit">
+  <div class="fileContainer">
+    <a href="/download/{{bill}}"><img src="/static/cheque.png" /></a>
+    <a href="/download/{{bill}}"><div class="fileName">{{bill.partition('_')[2]}}</div></a>
+  </div>
+</div>
+{% endfor %} {% endblock %}

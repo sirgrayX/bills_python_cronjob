@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='logo.ico')}}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}" />
+    <title>Чеки Лукойл</title>
+  </head>
+  <body>
+    <header>
+      <nav class="container">
+        <div class="wrapper">
+          {% if request.path != '/':%}
+          <a
+            class="back"
+            href="{{request.path.rpartition('/')[0] 
+                  if request.path.rpartition('/')[0] != '' else '/'}}"
+          >
+          </a>
+          {% endif %}
+        </div>
+
+        <div class="title">
+          <h1><a href="/">Электронные чеки Лукойл TEST</a></h1>
+        </div>
+      </nav>
+    </header>
+    <div class="containerMain">
+      <div class="layout-out">
+        <div class="layout-inner">{% block content %}{% endblock %}</div>
+      </div>
+    </div>
+  </body>
+</html>
+<script></script>

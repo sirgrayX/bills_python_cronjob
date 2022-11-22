@@ -1,0 +1,8 @@
+{% extends "base.html" %} {% block content %} {% for folder in folders: %}
+<div class="fileUnit">
+  <div class="fileContainer">
+    <a href="/{{card_number}}/{{year}}/{{folder}}"><img src="/static/folder.png" /></a>
+    <a href="/{{card_number}}/{{year}}/{{folder}}"><div class="fileName">{{folder}}</div></a>
+  </div>
+</div>
+{% endfor %} {% endblock %}

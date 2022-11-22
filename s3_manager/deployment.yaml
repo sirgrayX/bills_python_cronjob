@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s3-manager-deployment
+  labels:
+    app: s3manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: s3manager
+  template:
+    metadata:
+      labels:
+        app: s3manager
+    spec:
+      containers:
+      - name: s3manager
+        image: registry-01.gandiva.ru:443/s3manager:v1
+        ports:
+        - containerPort: 8888
+        

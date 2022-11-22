@@ -1,0 +1,9 @@
+flask
+jinja2
+python-dotenv
+gunicorn
+boto3
+pandas
+numpy
+xhtml2pdf
+requests

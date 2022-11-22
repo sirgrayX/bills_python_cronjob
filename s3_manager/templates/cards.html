@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+<div class="instruction">
+  <p>
+    Для поиска необходимой папки воспользуйтесь сочетанием клавиш ctrl+F: нажмите комбинацию и
+    введите последние 4 цифры карты.
+  </p>
+</div>
+{% for folder in folders: %}
+<div class="fileUnit">
+  <div class="fileContainer">
+    <a href="/{{folder}}"><img src="/static/folder.png" /></a>
+    <a href="/{{folder}}"><div class="fileName">{{folder}}</div></a>
+  </div>
+</div>
+{% endfor %} {% endblock %}
