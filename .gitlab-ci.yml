@@ -12,8 +12,8 @@ buildJob:
     - shell
   script:
     - echo "Build Images"
-    - docker build -t registry-01.gandiva.ru:443/bills-job:$CI_COMMIT_SHORT_SHA .
-    - docker push registry-01.gandiva.ru:443/bills-job:$CI_COMMIT_SHORT_SHA
+    - docker build -t ***/bills-job:$CI_COMMIT_SHORT_SHA .
+    - docker push ***/bills-job:$CI_COMMIT_SHORT_SHA
     #docker-compose build
   except:
     changes:
@@ -28,8 +28,8 @@ build-s3-Job:
   script:
     - echo "Build S3manager Images"
     - cd ./s3_manager
-    - docker build -t registry-01.gandiva.ru:443/s3manager:$CI_COMMIT_SHORT_SHA .
-    - docker push registry-01.gandiva.ru:443/s3manager:$CI_COMMIT_SHORT_SHA
+    - docker build -t ***/s3manager:$CI_COMMIT_SHORT_SHA .
+    - docker push ***/s3manager:$CI_COMMIT_SHORT_SHA
     #docker-compose build
   except:
     changes:
